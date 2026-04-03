@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(uuid())
+  name          String
+  email         String         @unique
+  password      String
+  role          UserRole       @default(USER)
+  isActive      Boolean        @default(true)
+  treeShareId   String?        @unique
+  isTreePublic  Boolean        @default(false)
+  createdAt     DateTime       @default(now())
+  members       Member[]
+  relationships Relationship[]
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model Member {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  name      String
+  gender    Gender
+  birthDate DateTime?
+  posX      Float?
+  posY      Float?
+  title     String?
+  photoUrl  String?
+  createdAt DateTime @default(now())
+
+  relationshipsFrom Relationship[] @relation("FromMember")
+  relationshipsTo   Relationship[] @relation("ToMember")
+}
+
+enum RelationshipType {
+  PARENT
+  SPOUSE
+}
+
+model Relationship {
+  id               String           @id @default(uuid())
+  userId           String
+  user             User             @relation(fields: [userId], references: [id])
+  fromMemberId     String
+  toMemberId       String
+  relationshipType RelationshipType
+
+  fromMember Member @relation("FromMember", fields: [fromMemberId], references: [id])
+  toMember   Member @relation("ToMember", fields: [toMemberId], references: [id])
+}
