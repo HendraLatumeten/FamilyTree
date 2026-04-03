@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   db:
-    container_name: familytree_db
     image: postgres:15-alpine
     restart: always
     environment:
@@ -15,14 +14,13 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
-    container_name: familytree_backend
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
       - "4000:4000"
     environment:
-      DATABASE_URL: "postgresql://user:password@db:5432/familytree?schema=public"
+      DATABASE_URL: "postgresql://familytree:PasswordFamilyTree@db:5432/familytree?schema=public"
       JWT_SECRET: "F4m1lytr33!."
       PORT: 4000
       EMAIL: "familytree@gmail.com"
@@ -34,7 +32,6 @@ services:
       - db
 
   frontend:
-    container_name: familytree_frontend
     build:
       context: ./frontend
       dockerfile: Dockerfile
