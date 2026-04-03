@@ -2,29 +2,31 @@ version: '3.8'
 
 services:
   db:
+    container_name: familytree_db
     image: postgres:15-alpine
     restart: always
     environment:
-      POSTGRES_USER: familytree
-      POSTGRES_PASSWORD: PasswordFamilyTree
-      POSTGRES_DB: familytree
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:${DB_PORT}"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
+    container_name: familytree_backend
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "4000:4000"
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
     environment:
-      DATABASE_URL: "postgresql://familytree:PasswordFamilyTree@db:5432/familytree?schema=public"
-      JWT_SECRET: "F4m1lytr33!."
-      PORT: 4000
-      EMAIL: "familytree@gmail.com"
-      PASSWORD: "familytree"
+      DATABASE_URL: "postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?schema=public"
+      JWT_SECRET: ${JWT_SECRET}
+      PORT: ${BACKEND_PORT}
+      EMAIL: ${ADMIN_EMAIL}
+      PASSWORD: ${ADMIN_PASSWORD}
     volumes:
       - ./backend:/app
       - /app/node_modules
@@ -32,13 +34,14 @@ services:
       - db
 
   frontend:
+    container_name: familytree_frontend
     build:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     environment:
-      NEXT_PUBLIC_API_URL: "http://localhost:4000/api"
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
       WATCHPACK_POLLING: "true"
       NEXT_TELEMETRY_DISABLED: 1
     volumes:
