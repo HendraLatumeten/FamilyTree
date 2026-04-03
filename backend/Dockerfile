@@ -1,4 +1,4 @@
-FROM node:20-alpine AS builder
+FROM docker.io/library/node:20-alpine AS builder
 
 WORKDIR /app
 
@@ -9,7 +9,7 @@ COPY . .
 RUN npx prisma@6.4.1 generate
 RUN npm run build
 
-FROM node:20-alpine
+FROM docker.io/library/node:20-alpine
 
 WORKDIR /app
 
