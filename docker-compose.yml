@@ -2,11 +2,12 @@ version: '3.8'
 
 services:
   db:
+    container_name: familytree_db
     image: postgres:15-alpine
     restart: always
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: familytree
+      POSTGRES_PASSWORD: PasswordFamilyTree
       POSTGRES_DB: familytree
     ports:
       - "5432:5432"
@@ -14,6 +15,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
+    container_name: familytree_backend
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -21,10 +23,10 @@ services:
       - "4000:4000"
     environment:
       DATABASE_URL: "postgresql://user:password@db:5432/familytree?schema=public"
-      JWT_SECRET: "your_super_secret_key"
+      JWT_SECRET: "F4m1lytr33!."
       PORT: 4000
-      EMAIL: "admin12345@gmail.com"
-      PASSWORD: "password123"
+      EMAIL: "familytree@gmail.com"
+      PASSWORD: "familytree"
     volumes:
       - ./backend:/app
       - /app/node_modules
@@ -32,6 +34,7 @@ services:
       - db
 
   frontend:
+    container_name: familytree_frontend
     build:
       context: ./frontend
       dockerfile: Dockerfile
