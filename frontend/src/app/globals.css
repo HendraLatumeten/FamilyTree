@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+:root {
+  --background: #020617;
+  --foreground: #f8fafc;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Custom Scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* GoJS Text Editor Custom Styling */
+.gojs-text-editor {
+  background-color: #0f172a !important; /* slate-950 */
+  color: #f8fafc !important; /* slate-50 */
+  border: 1px solid #334155 !important; /* slate-700 */
+  border-radius: 12px !important;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5) !important;
+  padding: 6px 12px !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  outline: none !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  appearance: none !important; 
+}
+
+.gojs-text-editor:focus {
+  border-color: #3b82f6 !important; /* blue-500 */
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Custom dropdown arrow for select editor */
+select.gojs-text-editor {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 10px center !important;
+  background-size: 16px !important;
+  padding-right: 32px !important;
+  cursor: pointer !important;
+}

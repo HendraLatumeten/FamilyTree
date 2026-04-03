@@ -1,0 +1,81 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
+import { useUserStore } from '@/store/userStore';
+import { showError } from '@/utils/swal';
+import Link from 'next/link';
+import { TreePine } from 'lucide-react';
+
+export default function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const router = useRouter();
+  const login = useUserStore((state) => state.login);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post('http://localhost:4000/api/auth/login', { email, password });
+      login(data.token, data.name, data.role, data.isActive);
+      router.push('/dashboard');
+    } catch (err: any) {
+      showError("Login Gagal", err.response?.data?.error || 'Email atau password salah');
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[#050a05] text-white">
+      <div className="w-full max-w-md p-10 rounded-3xl bg-white/5 backdrop-blur-xl shadow-2xl border border-white/10">
+        <div className="flex justify-center mb-6">
+          <div className="p-3 rounded-2xl bg-gradient-to-br from-green-600 to-emerald-800 shadow-lg">
+            <TreePine size={32} className="text-white" />
+          </div>
+        </div>
+        <h1 className="text-4xl font-black mb-2 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-200 to-amber-500">
+          Welcome Home
+        </h1>
+        <p className="text-slate-400 text-center mb-8 text-sm">Sign in to continue your family journey</p>
+        
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-1">
+            <label className="block text-xs font-bold uppercase tracking-widest text-amber-500/80 ml-1">Email Address</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-5 py-3 rounded-2xl bg-white/5 border border-white/10 focus:outline-none focus:border-amber-500/50 focus:bg-white/10 transition-all font-medium"
+              placeholder="name@example.com"
+              required
+            />
+          </div>
+          <div className="space-y-1">
+            <label className="block text-xs font-bold uppercase tracking-widest text-amber-500/80 ml-1">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-5 py-3 rounded-2xl bg-white/5 border border-white/10 focus:outline-none focus:border-amber-500/50 focus:bg-white/10 transition-all font-medium"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full py-4 px-6 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-[#050a05] rounded-2xl font-black text-lg shadow-xl shadow-amber-900/40 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+          >
+            Enter Tree
+          </button>
+        </form>
+        <p className="mt-8 text-center text-slate-400 text-sm">
+          New to the family?{' '}
+          <Link href="/register" className="text-amber-400 font-bold hover:underline">
+            Join Now
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,134 @@
+/* diagram-js base styles (simplified since we rely on our own UI mostly) */
+.djs-container {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.djs-element {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.djs-outline {
+  stroke: #60a5fa !important;
+  stroke-dasharray: 4;
+  fill: none;
+  pointer-events: none;
+}
+
+/* Palette Styles */
+.djs-palette {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  width: 48px;
+  padding: 4px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 10;
+}
+
+.djs-palette-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.djs-palette .entry {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 6px;
+  color: #64748b;
+  font-size: 20px;
+}
+
+.djs-palette .entry:hover {
+  background: #f1f5f9;
+  color: #4f46e5;
+}
+
+.visual-icon-person::before {
+  content: '👤';
+}
+
+/* Context Pad Styles */
+.djs-context-pad {
+  position: absolute;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  display: flex;
+  gap: 4px;
+  z-index: 100;
+}
+
+.djs-context-pad .entry {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.djs-context-pad .entry:hover {
+  background: #f1f5f9;
+}
+
+.context-pad-icon-delete { color: #ef4444; }
+.context-pad-icon-delete::before { content: '🗑️'; }
+
+.context-pad-icon-connect { color: #64748b; }
+.context-pad-icon-connect::before { content: '➡️'; }
+
+.context-pad-icon-append { color: #10b981; }
+.context-pad-icon-append::before { content: '➕'; }
+
+/* Direct Editing Styles */
+.djs-direct-editing-parent {
+  position: absolute;
+  z-index: 1000;
+  padding: 4px;
+  background: white;
+  border: 2px solid #4f46e5;
+  border-radius: 4px;
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+.djs-direct-editing-content {
+  outline: none;
+  font-family: inherit;
+  font-size: 14px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  min-width: 100px;
+  max-width: 300px;
+  text-align: center;
+}
+
+/* Bendpoints / Resizer Styles */
+.djs-bendpoint-visual {
+  fill: #ffffff;
+  stroke: #4f46e5;
+  stroke-width: 2px;
+}
+
+.djs-segment-dragger .djs-visual {
+  stroke: #4f46e5;
+  stroke-opacity: 0.4;
+  stroke-width: 10px;
+}
