@@ -120,13 +120,18 @@ router.post('/relationship', async (req: AuthRequest, res: Response) => {
 });
 
 router.get('/tree', async (req: AuthRequest, res: Response) => {
-  const members = await prisma.member.findMany({
-    where: { userId: req.userId! },
-  });
-  const relationships = await prisma.relationship.findMany({
-    where: { userId: req.userId! },
-  });
-  res.json({ members, relationships });
+  try {
+    const members = await prisma.member.findMany({
+      where: { userId: req.userId! },
+    });
+    const relationships = await prisma.relationship.findMany({
+      where: { userId: req.userId! },
+    });
+    res.json({ members, relationships });
+  } catch (error: any) {
+    console.error('[BACKEND] Error fetching family tree:', error);
+    res.status(500).json({ error: 'Gagal mengambil data silsilah keluarga' });
+  }
 });
 
 router.patch('/members/:id', async (req: AuthRequest, res: Response) => {
