@@ -393,19 +393,24 @@ const FamilyTree = forwardRef<FamilyTreeRef, Props>(({
     // 1. PARENT-CHILD LINK (Default)
     diagram.linkTemplateMap.add("", 
       $(go.Link, { 
-        routing: go.Link.Orthogonal, 
+        routing: go.Link.AvoidsNodes, // Lebih cerdas menghindari tabrakan kotak
+        curve: go.Link.JumpOver,      // Melompati garis horizontal lain agar tidak bingung
         corner: 15, 
+        reshapable: true,            // AKTIFKAN: Garis bisa ditarik/diubah posisinya
+        resegmentable: true,         // AKTIFKAN: Bisa dipatahkan jadi banyak segmen
         selectionAdorned: false,
         toShortLength: 4 
       },
-      $(go.Shape, { strokeWidth: 2, stroke: '#4d7c0f' }),
+      $(go.Shape, { strokeWidth: 2.5, stroke: '#4d7c0f' }),
       $(go.Shape, { toArrow: 'Standard', stroke: null, fill: '#4d7c0f', scale: 1.2 })
     ));
 
     // 2. SPOUSE LINK (Horizontal / Different Styling)
     diagram.linkTemplateMap.add("SPOUSE", 
       $(go.Link, { 
-        routing: go.Routing.Normal, 
+        routing: go.Link.AvoidsNodes, 
+        reshapable: true,
+        resegmentable: true,
         selectionAdorned: false,
       },
       $(go.Shape, { strokeWidth: 3, stroke: '#f59e0b', strokeDashArray: [6, 3] }),
