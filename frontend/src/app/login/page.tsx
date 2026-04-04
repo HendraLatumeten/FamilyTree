@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { TreePine } from 'lucide-react';
 
 import { GoogleLogin } from '@react-oauth/google';
+import AnimatedBackground from '@/components/AnimatedBackground';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -41,8 +42,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#050a05] text-white">
-      <div className="w-full max-w-md p-10 rounded-3xl bg-white/5 backdrop-blur-xl shadow-2xl border border-white/10">
+    <div className="min-h-screen relative flex items-center justify-center bg-[#1b331b] text-white overflow-hidden p-6">
+      {/* 1. ANIMATED BACKGROUND WITH PARALLAX */}
+      <AnimatedBackground />
+
+      {/* 2. LOGIN FORM BOX */}
+      <div className="relative z-10 w-full max-w-md p-8 md:p-10 rounded-3xl bg-[#1b331b]/40 backdrop-blur-2xl shadow-2xl border border-white/5">
         <div className="flex justify-center mb-6">
           <div className="p-3 rounded-2xl bg-gradient-to-br from-green-600 to-emerald-800 shadow-lg">
             <TreePine size={32} className="text-white" />
