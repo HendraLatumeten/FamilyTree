@@ -8,6 +8,8 @@ import { showError } from '@/utils/swal';
 import Link from 'next/link';
 import { TreePine } from 'lucide-react';
 
+import { GoogleLogin } from '@react-oauth/google';
+
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,6 +25,18 @@ export default function LoginPage() {
       router.push('/dashboard');
     } catch (err: any) {
       showError("Login Gagal", err.response?.data?.error || 'Email atau password salah');
+    }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    try {
+      const { data } = await axios.post('/api/auth/google-login', { 
+        credential: credentialResponse.credential 
+      });
+      login(data.token, data.name, data.role, data.isActive);
+      router.push('/dashboard');
+    } catch (err: any) {
+      showError("Google Login Gagal", err.response?.data?.error || 'Terjadi kesalahan saat masuk dengan Google');
     }
   };
 
@@ -69,6 +83,23 @@ export default function LoginPage() {
             Enter Tree
           </button>
         </form>
+
+        <div className="mt-8 flex items-center justify-center space-x-4">
+          <div className="h-px bg-white/10 flex-1"></div>
+          <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">OR</span>
+          <div className="h-px bg-white/10 flex-1"></div>
+        </div>
+
+        <div className="mt-8 flex justify-center">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => showError("Error", "Login Google Gagal")}
+            theme="filled_black"
+            shape="pill"
+            size="large"
+          />
+        </div>
+
         <p className="mt-8 text-center text-slate-400 text-sm">
           New to the family?{' '}
           <Link href="/register" className="text-amber-400 font-bold hover:underline">
