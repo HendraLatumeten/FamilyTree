@@ -46,6 +46,7 @@ services:
       NEXT_PUBLIC_HMR_PORT: 443
       WATCHPACK_POLLING: "true"
       NEXT_TELEMETRY_DISABLED: 1
+      NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
     volumes:
       - ./frontend:/app
       - /app/node_modules
