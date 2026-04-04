@@ -67,6 +67,18 @@
 4. **Access the App**
    Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+## 🌐 Deployment & SSL
+
+For production deployment on an Ubuntu server using **Podman**, please refer to our specialized guides:
+
+- [SSL & HTTPS Setup Guide (Certbot)](./docs/SSL_SETUP.md) — How to generate, renew, and fix permissions for SSL certificates.
+
+### Production Commands
+```bash
+# Start the full stack (DB, Backend, Frontend, Nginx)
+podman-compose up -d --build
+```
+
 ## 📄 License
 This project is licensed under the MIT License.
 
