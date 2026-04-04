@@ -51,7 +51,7 @@ export default function AdminDashboard() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:4000/api/admin/users', {
+      const res = await axios.get('/api/admin/users', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUsers(res.data);
@@ -73,7 +73,7 @@ export default function AdminDashboard() {
     if (result.isConfirmed) {
       try {
         showLoading(`Sedang ${action}...`);
-        await axios.patch(`http://localhost:4000/api/admin/users/${userId}/status`, 
+        await axios.patch(`/api/admin/users/${userId}/status`, 
           { isActive: !currentStatus },
           { headers: { Authorization: `Bearer ${token}` } }
         );

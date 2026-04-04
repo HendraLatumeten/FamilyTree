@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { showSuccess, showError } from '@/utils/swal';
 import Link from 'next/link';
+import { TreePine } from 'lucide-react';
 
 export default function RegisterPage() {
   const [name, setName] = useState('');
@@ -16,7 +17,7 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:4000/api/auth/register', { name, email, password });
+      await axios.post('/api/auth/register', { name, email, password });
       showSuccess("Pendaftaran Berhasil", "Silakan login dengan akun baru Anda.");
       router.push('/login');
     } catch (err: any) {

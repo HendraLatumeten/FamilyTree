@@ -274,7 +274,7 @@ const FamilyTree = forwardRef<FamilyTreeRef, Props>(({
             },
               new go.Binding("source", "photoUrl", (url) => {
                 if (!url) return "";
-                const fullUrl = url.startsWith('http') ? url : (process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:4000') + url;
+                const fullUrl = url.startsWith('http') ? url : (process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || '') + url;
                 return fullUrl;
               }),
               new go.Binding("visible", "photoUrl", (u) => !!u)
@@ -302,7 +302,7 @@ const FamilyTree = forwardRef<FamilyTreeRef, Props>(({
                   click: (e, obj: any) => {
                     const data = obj.part.data;
                     if (data.photoUrl) {
-                      const fullUrl = data.photoUrl.startsWith('http') ? data.photoUrl : (process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:4000') + data.photoUrl;
+                      const fullUrl = data.photoUrl.startsWith('http') ? data.photoUrl : (process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || '') + data.photoUrl;
                       handlersRef.current.onViewPhoto?.(fullUrl, data.name);
                     }
                   }
