@@ -96,7 +96,7 @@ const FamilyTree = forwardRef<FamilyTreeRef, Props>(({
         angle: 90, 
         layerSpacing: 80, 
         nodeSpacing: 40,
-        isInitial: false,
+        isInitial: true, // AKTIFKAN: Biarkan GoJS menyusun posisi awal secara otomatis
       }),
       'undoManager.isEnabled': !readOnly,
       initialContentAlignment: go.Spot.Center,
